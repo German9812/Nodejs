@@ -1,5 +1,5 @@
 const userQueries = require('../db/queries');
-
+const UserModel = require('../models/user');
 
 exports.getAllUsers = (req, res) => {
   userQueries.getAllUsers((err, results) => {
@@ -18,6 +18,12 @@ exports.getUserById = (req, res) => {
 };
 
 exports.createUser = (req, res) => {
+  const validation = UserModel.validateCreateData(req.body);
+  
+  if (!validation.isValid) {
+    return res.status(400).json({ errors: validation.errors });
+  }
+
   userQueries.createUser(req.body, (err, result) => {
     if (err) return res.status(500).json({ error: err.message });
     res.status(201).json({ id: result.insertId, ...req.body });
@@ -26,6 +32,12 @@ exports.createUser = (req, res) => {
 
 exports.updateUser = (req, res) => {
   const id = req.params.id;
+  const validation = UserModel.validateUpdateData(req.body);
+  
+  if (!validation.isValid) {
+    return res.status(400).json({ errors: validation.errors });
+  }
+
   userQueries.updateUser(id, req.body, (err, result) => {
     if (err) return res.status(500).json({ error: err.message });
     if (result.affectedRows === 0) return res.status(404).json({ message: 'Usuario no encontrado' });
