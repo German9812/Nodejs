@@ -2,12 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-
-// Usuario de prueba para autenticación
-const user = {
-  username: 'admin',
-  password: bcrypt.hashSync('123456', 8) // contraseña cifrada
-};
+const authQueries = require('../db/authqueries');
 
 /**
  * @swagger
@@ -30,18 +25,23 @@ const user = {
  *       200:
  *         description: Token generado correctamente
  */
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   const { username, password } = req.body;
-
-  if (username !== user.username || !bcrypt.compareSync(password, user.password)) {
-    return res.status(401).json({ message: 'Credenciales incorrectas' });
+try {
+  const user = await authQueries.findUserByUsername(username);
+  if (!user || !bcrypt.compareSync(password, user.password)) {
+    return res.status(401).json({ message: 'Credenciales incorrectas' })
   }
 
-  const token = jwt.sign({ username }, process.env.JWT_SECRET || 'secret123', {
+
+  const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET, {
     expiresIn: '1h'
   });
 
   res.json({ token });
+} catch (err) {
+  res.status(500).json({ error : 'Error al iniciar sesión' });
+}
 });
 
 module.exports = router;
