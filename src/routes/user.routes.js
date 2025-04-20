@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/user.controller');
-
+const auth = require('../middlewares/auth');
 /**
  * @swagger
  * tags:
@@ -15,11 +15,13 @@ const userController = require('../controllers/user.controller');
  *   get:
  *     summary: Obtener todos los usuarios
  *     tags: [Usuarios]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Lista de usuarios
  */
-router.get('/', userController.getAllUsers);
+router.get('/', auth, userController.getAllUsers);
 
 /**
  * @swagger
@@ -27,6 +29,8 @@ router.get('/', userController.getAllUsers);
  *   get:
  *     summary: Obtener un usuario por ID
  *     tags: [Usuarios]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -37,7 +41,7 @@ router.get('/', userController.getAllUsers);
  *       200:
  *         description: Usuario encontrado
  */
-router.get('/:id', userController.getUserById);
+router.get('/:id', auth, userController.getUserById);
 
 /**
  * @swagger
@@ -45,6 +49,8 @@ router.get('/:id', userController.getUserById);
  *   post:
  *     summary: Crear un nuevo usuario
  *     tags: [Usuarios]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -60,7 +66,7 @@ router.get('/:id', userController.getUserById);
  *       201:
  *         description: Usuario creado
  */
-router.post('/', userController.createUser);
+router.post('/', auth, userController.createUser);
 
 /**
  * @swagger
@@ -68,6 +74,8 @@ router.post('/', userController.createUser);
  *   put:
  *     summary: Actualizar usuario por ID
  *     tags: [Usuarios]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -89,7 +97,7 @@ router.post('/', userController.createUser);
  *       200:
  *         description: Usuario actualizado
  */
-router.put('/:id', userController.updateUser);
+router.put('/:id', auth, userController.updateUser);
 
 /**
  * @swagger
@@ -97,6 +105,8 @@ router.put('/:id', userController.updateUser);
  *   delete:
  *     summary: Eliminar usuario por ID
  *     tags: [Usuarios]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -107,6 +117,6 @@ router.put('/:id', userController.updateUser);
  *       200:
  *         description: Usuario eliminado
  */
-router.delete('/:id', userController.deleteUser);
+router.delete('/:id', auth, userController.deleteUser);
 
 module.exports = router;
