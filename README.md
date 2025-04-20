@@ -12,8 +12,24 @@ Este es un proyecto básico de API REST construido con **Node.js**, **Express** 
 
 ## 📂 Estructura del proyecto
 
-Nodejs/ ├── src/ ├── config/ # Conexión a la base de datos ├── controllers/ # Lógica de negocio ├── routes/ # Endpoints ├── swagger.js # Configuración de Swagger ├── index.js # Punto de entrada
-
+Nodejs/
+│── src
+│    ├── config/
+│    │   └── db.js
+│    │
+│    ├── controllers/
+│    │   └── user.controller.js
+│    │
+│    ├── routes/
+│    │    └── user.routes.js
+│    │
+│    └── index.js
+│
+├── swagger.js
+├
+├── package.json
+├── package-lock.json
+└── README.md ✅
 
 
 ## 📦 Instalación
