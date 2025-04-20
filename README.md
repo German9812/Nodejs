@@ -20,8 +20,8 @@ Nodejs/ ├── src/ ├── config/ # Conexión a la base de datos ├─�
 
 1. Clona el repositorio:
 
-git clone https://github.com/tu-usuario/mi-api-node.git
-cd mi-api-node
+git clone https://github.com/German9812/Nodejs.git
+cd Nodejs
 
 
 2. Instala dependencias:
@@ -39,16 +39,6 @@ node index.js
 📘 Documentación Swagger
 Disponible en:
 👉 http://localhost:3000/api-docs
-
-
-📬 Endpoints principales
-
-Método	Endpoint	Descripción
-GET	/api/users	Obtener todos los usuarios
-GET	/api/users/:id	Obtener un usuario por ID
-POST	/api/users	Crear un nuevo usuario
-PUT	/api/users/:id	Actualizar usuario
-DELETE	/api/users/:id	Eliminar usuario
 
 
 🧪 Pruebas con Postman
