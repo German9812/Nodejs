@@ -1,5 +1,7 @@
 const userQueries = require('../db/queries');
 const UserModel = require('../models/user');
+const events = require('../websocket/events');
+const { emitEvent } = require('../websocket/websocket');
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -29,7 +31,10 @@ exports.createUser = async (req, res) => {
 
   try {
     const result = await userQueries.createUser(req.body);
-    res.status(201).json({ id: result.insertId, ...req.body });
+    const newUser = { id: result.insertId, ...req.body };
+
+    emitEvent(events.USER_CREATED, newUser);
+    res.status(201).json({ newUser});
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -45,7 +50,9 @@ exports.updateUser = async (req, res) => {
   try {
     const result = await userQueries.updateUser(id, req.body);
     if (result.affectedRows === 0) return res.status(404).json({ message: 'Usuario no encontrado' });
-    res.json({ id: parseInt(id), ...req.body });
+    const updateUser = { id: parseInt(id), ...req.body };
+    emitEvent(events.USER_UPDATED, updateUser);
+    res.json({ updateUser });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -56,7 +63,9 @@ exports.deleteUser = async (req, res) => {
     const id = req.params.id;
     const result = await userQueries.deleteUser(id);
     if (result.affectedRows === 0) return res.status(404).json({ message: 'Usuario no encontrado' });
-    res.json({ message: 'Usuario eliminado' });
+    const deletedUser = { id: parseInt(id) };
+    emitEvent(events.USER_DELETED, deletedUser);
+    res.json({ deletedUser });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
