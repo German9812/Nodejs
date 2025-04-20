@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/user.controller')
+const userController = require('../controllers/user.controller');
 
 /**
  * @swagger
@@ -11,10 +11,10 @@ const userController = require('../controllers/user.controller')
 
 /**
  * @swagger
- * /users:
+ * /api/users:
  *   get:
  *     summary: Obtener todos los usuarios
- *     tags: [Users]
+ *     tags: [Usuarios]
  *     responses:
  *       200:
  *         description: Lista de usuarios
@@ -23,10 +23,10 @@ router.get('/', userController.getAllUsers);
 
 /**
  * @swagger
- * /users/{id}:
+ * /api/users/{id}:
  *   get:
  *     summary: Obtener un usuario por ID
- *     tags: [Users]
+ *     tags: [Usuarios]
  *     parameters:
  *       - in: path
  *         name: id
@@ -41,10 +41,10 @@ router.get('/:id', userController.getUserById);
 
 /**
  * @swagger
- * /users:
+ * /api/users:
  *   post:
  *     summary: Crear un nuevo usuario
- *     tags: [Users]
+ *     tags: [Usuarios]
  *     requestBody:
  *       required: true
  *       content:
@@ -64,10 +64,10 @@ router.post('/', userController.createUser);
 
 /**
  * @swagger
- * /users/{id}:
+ * /api/users/{id}:
  *   put:
  *     summary: Actualizar usuario por ID
- *     tags: [Users]
+ *     tags: [Usuarios]
  *     parameters:
  *       - in: path
  *         name: id
@@ -93,10 +93,10 @@ router.put('/:id', userController.updateUser);
 
 /**
  * @swagger
- * /users/{id}:
+ * /api/users/{id}:
  *   delete:
  *     summary: Eliminar usuario por ID
- *     tags: [Users]
+ *     tags: [Usuarios]
  *     parameters:
  *       - in: path
  *         name: id
@@ -109,4 +109,4 @@ router.put('/:id', userController.updateUser);
  */
 router.delete('/:id', userController.deleteUser);
 
-module.exports = router; 
+module.exports = router;
