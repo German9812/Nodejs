@@ -5,6 +5,13 @@ const { initWebSocket } = require('./websocket/websocket');
 const app = express();
 const userRoutes = require('./routes/user.routes');
 const authRoutes = require('./routes/auth.routes');
+const cors = require('cors');
+
+app.use(cors({
+    origin: 'http://localhost:8080',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }));
 
 app.use(express.json());
 app.use('/api/users', userRoutes);

@@ -5,7 +5,7 @@ const authMiddleware = (req, res, next) => {
   const token = req.headers['authorization'];
 
   if (!token || !token.startsWith('Bearer ')) {
-    return res.status(401).json({ message: 'Token no proporcionado' });
+    return res.status(401).json({ message: 'unauthorized' });
   }
 
   const accessToken = token.split(' ')[1];

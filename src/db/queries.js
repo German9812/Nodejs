@@ -44,7 +44,20 @@ const userQueries = {
         else resolve(result);
       });
     });
-  }
+  },
+
+  emailExists: async (email, excludeId = null) => {
+    let sql = 'SELECT id FROM users WHERE email = ?';
+    let params = [email];
+
+    if (excludeId) {
+      sql += ' AND id != ?';
+      params.push(excludeId);
+    }
+
+    const [results] = await db.promise().query(sql, params);
+    return results.length > 0;
+  },
 };
 
 module.exports = userQueries;
