@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WebSocket</title>
+</head>
+<body>
+  <h2>Eventos</h2>
+  <ul id="event-list"></ul>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script>
+    const socket = io('http://localhost:3000');
+
+    const list = document.getElementById('event-list');
+
+    const addEvent = (msg) => {
+      const li = document.createElement('li');
+      li.innerText = msg;
+      list.appendChild(li);
+    };
+
+    socket.on('userCreated', data => addEvent(`Nuevo usuario creado: ${data.name}`));
+    socket.on('userUpdated', data => addEvent(`Usuario actualizado: ${data.name}`));
+    socket.on('userDeleted', data => addEvent(`Usuario eliminado con ID: ${data.id}`));
+  </script>
+</body>
+</html>
